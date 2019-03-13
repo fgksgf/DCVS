@@ -1,0 +1,4 @@
+# redis config
+REDIS_HOST = '39.96.94.81'
+REDIS_PORT = 6379
+REDIS_PASSWORD = 'iE23fP$d9yTQCgmc'
