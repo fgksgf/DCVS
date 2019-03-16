@@ -41,10 +41,14 @@
                 </small>
             </div>
         </form>
+        <div class="alert alert-dark fade show" role="alert" style="display: none;">
+            <strong>正在爬取评论信息，请稍候......</strong>
+        </div>
         <p>
-            <button type="button" id="btn1" class="btn btn-secondary">开始使用</button>
+            <button type="button" id="btn1" class="btn btn-secondary">开始爬取</button>
         </p>
     </main>
+
 
     <footer class="mastfoot mt-auto">
         <div class="inner">
@@ -61,7 +65,7 @@
 <script src="../static/js/bootstrap.js"></script>
 <script>
     $("#btn1").on('click', function () {
-        var url = $('input').val();
+        const url = $('input').val();
 
         // 检验输入是否为空
         if (url.length === 0) {
@@ -69,38 +73,36 @@
             return;
         }
 
-        // 禁用按钮，防止重复请求
-        $('#btn1').attr('disabled', 'disabled');
+        // 隐藏按钮，防止重复请求
+        $('#btn1').css('display', 'none');
 
         // 正则验证URL是否符合格式
-        var regu = /^(http(s)?:\/\/item\.jd\.com\/)[0-9]+(\.html)$/;
-        var re = new RegExp(regu);
+        const pattern = /^(http(s)?:\/\/item\.jd\.com\/)[0-9]+(\.html)$/;
+        const re = new RegExp(pattern);
         if (!re.test(url)) {
             alert('URL不符合示例格式，请重试！');
-            // $('input').val("");
             return;
         }
 
         const pid = url.substr(20);
-        // $.get('crawl/jd/' + pid);
-        alert(pid);
+        $('.alert').css('display', 'block');
         $.ajax({
             type: 'GET',                         //请求方式为post方式
-            url: 'crawl/jd/' + pid,                      //请求地址
-            dataType: 'json',                     //服务器返回类型为JSON类型
-            //发送到服务器的数据
-            success: function (data) {            //请求成功后的回调函数
+            url: 'crawl/jd/' + pid,              //请求地址
+            dataType: 'json',                    //服务器返回类型为JSON类型
+            success: function (data) {           //请求成功后的回调函数
                 if (data.result === 'ok') {
-                    alert('验证码错误!');
+                    alert('爬取完成！');
+                    // 页面跳转
+                    location.href = location.host + '/analyze/jd/' + data.pid
                 }
-                $('#btn1').removeAttr('disabled');
             },
             error: function () {
                 alert('连接服务器失败，请稍后重试！');
-                $('#btn1').removeAttr('disabled');
+                $('.alert').css('display', 'none');
+                $('#btn1').css('display', 'inline');
             }
         });
-
     });
 </script>
 </body>

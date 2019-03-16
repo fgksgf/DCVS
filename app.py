@@ -2,9 +2,12 @@ import json
 import random
 
 # from pyecharts import Scatter3D
+import time
+
 from flask import Flask, render_template
 
-from util.redis_util import insert_into_redis
+from util.mongo_util import find_one_by_pid
+from util.redis_util import redis_client
 
 app = Flask(__name__)
 REMOTE_HOST = "https://pyecharts.github.io/assets/js"
@@ -16,17 +19,26 @@ def index():
     return render_template('index.html')
 
 
-# 将获取的pid与网址前缀连接，插入到任务队列
 @app.route('/crawl/jd/<string:pid>', methods=['GET'])
 def jd_crawler(pid):
-    insert_into_redis('jd:items_urls', PREFIX + pid)
-    result = {'result': 'ok'}
+    # eg. pid: '100000822969.html'
+    # 将获取的pid与网址前缀连接，插入到任务队列
+    redis_client.lpush('jd:items_urls', PREFIX + pid)
+    # eg. pid: '100000822969'
+    pid = pid[:-5]
+
+    # 每两秒查询一次，爬取任务是否完成
+    while int(redis_client.get(pid)) > 0:
+        time.sleep(2)
+
+    result = {'result': 'ok', 'pid': pid}
     return json.dumps(result)
 
 
-@app.route('/analyze/jd/<string:pid>', methods=['GET'])
+@app.route('/analyze/jd/<string:pid>')
 def jd_analyze(pid):
-    pass
+    product = find_one_by_pid(pid)
+
 
 #
 # @app.route('/chart')
