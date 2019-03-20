@@ -7,4 +7,9 @@ client = pymongo.MongoClient('mongodb://localhost:27017/')
 
 def get_product_by_pid(pid):
     collection = client['jd'].products
-    return Product(collection.find_one({"pid": str(pid)}))
+    item = collection.find_one({"pid": str(pid)})
+    if item:
+        return Product(item)
+    else:
+        return None
+
