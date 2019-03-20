@@ -9,11 +9,8 @@
 
     <title>分布式网络数据采集与可视化系统</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="../static/css/bootstrap.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="../static/css/index.css" rel="stylesheet">
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <link href="/static/css/index.css" rel="stylesheet">
 </head>
 
 <body class="text-center">
@@ -37,7 +34,7 @@
             <div class="form-group">
                 <input type="text" class="form-control" aria-describedby="urlHelp"
                        placeholder="请输入商品详情页URL">
-                <small id="urlHelp" class="form-text text-muted">例：https://item.jd.com/100000177760.html
+                <small id="urlHelp" class="form-text text-muted">例：https://item.jd.com/22042025230.html
                 </small>
             </div>
         </form>
@@ -62,7 +59,7 @@
         src="https://code.jquery.com/jquery-3.3.1.js"
         integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
         crossorigin="anonymous"></script>
-<script src="../static/js/bootstrap.js"></script>
+<script src="/static/js/bootstrap.js"></script>
 <script>
     $("#btn1").on('click', function () {
         const url = $('input').val();
@@ -94,7 +91,7 @@
                 if (data.result === 'ok') {
                     alert('爬取完成！');
                     // 页面跳转
-                    location.href = location.host + '/analyze/jd/' + data.pid
+                    location.href ='http://' + location.host + '/analyze/jd/bar/' + data.pid
                 }
             },
             error: function () {
