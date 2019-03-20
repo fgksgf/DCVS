@@ -9,12 +9,12 @@ class Comment:
         # 购买后多少天评论
         self.after_days = int(item.get('days'))
         # 商品颜色
-        self.product_color = item.get('productColor')
+        self.product_color = str(item.get('productColor'))
         # 商品配置
-        self.product_size = item.get('productSize')
+        self.product_size = str(item.get('productSize'))
         # 点赞数
         self.votes = int(item.get('usefulVoteCount'))
         # 客户端
-        self.client = item.get('userClientShow')
+        self.client = str(item.get('userClientShow')).replace('来自京东', '')
         # 用户等级
-        self.level = item.get('userLevelName')
+        self.level = str(item.get('userLevelName'))

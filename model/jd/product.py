@@ -11,15 +11,13 @@ class Product:
         self.price = item.get('price')
 
         # 好评数
-        self.good_count = item.get('comment_summary').get('goodCount')
+        self.good_count = int(item.get('comment_summary').get('goodCount'))
         # 中评数
-        self.general_count = item.get('comment_summary').get('generalCount')
+        self.general_count = int(item.get('comment_summary').get('generalCount'))
         # 差评数
-        self.poor_count = item.get('comment_summary').get('poorCount')
-        # 追评数
-        self.after_count = item.get('comment_summary').get('afterCount')
+        self.poor_count = int(item.get('comment_summary').get('poorCount'))
         # 默认好评数
-        self.default_good_count = item.get('comment_summary').get('defaultGoodCount')
+        self.default_good_count = int(item.get('comment_summary').get('defaultGoodCount'))
 
         # 热评标签
         self.hot_comment_tags = item.get('hot_comments')
@@ -37,3 +35,5 @@ class Product:
                 self.general_comments.append(comment)
             else:
                 self.poor_comments.append(comment)
+
+        self.comments = self.good_comments + self.general_comments + self.poor_comments
