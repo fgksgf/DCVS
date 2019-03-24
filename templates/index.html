@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../../../favicon.ico">
 
     <title>分布式网络数据采集与可视化系统</title>
 
-    <link href="/static/css/bootstrap.css" rel="stylesheet">
-    <link href="/static/css/index.css" rel="stylesheet">
+    <link href="../static/css/bootstrap.css" rel="stylesheet">
+    <link href="../static/css/index.css" rel="stylesheet">
+
+    <!--<link href="/static/css/bootstrap.css" rel="stylesheet">-->
+    <!--<link href="/static/css/index.css" rel="stylesheet">-->
 </head>
 
 <body class="text-center">
@@ -36,6 +38,17 @@
                        placeholder="请输入商品详情页URL">
                 <small id="urlHelp" class="form-text text-muted">例：https://item.jd.com/22042025230.html
                 </small>
+                <br>
+                <div class="input-group">
+                    <div style="margin-left: 20%;margin-right: 5%">
+                        <img src="../static/img/xhyw.png" onclick="this.src='/code?'+ Math.random()" style="height: 40px;">
+                    </div>
+                    <div style="height: 40px">
+                        <input type="text" class="form-control" placeholder="Search for...">
+                    </div>
+                </div><!-- /input-group -->
+                <!--<img src="/code " onclick="this.src='/code?'+ Math.random()">-->
+                <!--<input type="text" class="form-control" placeholder="请输入验证码" style="display: inline">-->
             </div>
         </form>
         <div class="alert alert-dark fade show" role="alert" style="display: none;">
@@ -59,7 +72,8 @@
         src="https://code.jquery.com/jquery-3.3.1.js"
         integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
         crossorigin="anonymous"></script>
-<script src="/static/js/bootstrap.js"></script>
+<script src="../static/js/bootstrap.js"></script>
+<!--<script src="/static/js/bootstrap.js"></script>-->
 <script>
     $("#btn1").on('click', function () {
         const url = $('input').val();
@@ -91,7 +105,7 @@
                 if (data.result === 'ok') {
                     alert('爬取完成！');
                     // 页面跳转
-                    location.href ='http://' + location.host + '/analyze/jd/bar/' + data.pid
+                    location.href = 'http://' + location.host + '/analyze/jd/bar/' + data.pid
                 }
             },
             error: function () {
