@@ -1,12 +1,17 @@
+import io
 import json
 import time
-from flask import Flask, render_template
+from io import BytesIO, StringIO
+
+from flask import Flask, render_template, make_response, session, send_file
 
 from service.jd_service import JDPage
+from util.code_util import generate_verify_image
 from util.mongo_util import get_product_by_pid
 from util.redis_util import redis_client
 
 app = Flask(__name__)
+app.secret_key = "super secret key"
 REMOTE_HOST = "https://pyecharts.github.io/assets/js"
 PREFIX = 'https://item.jd.com/'
 POSTFIX = '.html'
@@ -62,6 +67,16 @@ def jd_charts(chart, pid):
         host=REMOTE_HOST,
         script_list=jd_page.page.get_js_dependencies()
     )
+
+
+@app.route('/code')
+def get_code():
+    image, code = generate_verify_image()
+    fp = './static/img/' + code + '.png'
+    image.save(fp, 'png')
+    session['image'] = code
+    return send_file(fp, mimetype='image/png')
+    # return response
 
 
 if __name__ == '__main__':
