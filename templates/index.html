@@ -1,120 +1,33 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+{% extends "base.html" %}
 
-    <title>分布式网络数据采集与可视化系统</title>
-
-    <link href="../static/css/bootstrap.css" rel="stylesheet">
-    <link href="../static/css/index.css" rel="stylesheet">
-
-    <!--<link href="/static/css/bootstrap.css" rel="stylesheet">-->
-    <!--<link href="/static/css/index.css" rel="stylesheet">-->
-</head>
-
-<body class="text-center">
-
-<div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
-    <header class="masthead mb-auto">
-        <div id="brand">
-            <h3 class="masthead-brand">网络数据采集与可视化</h3>
-        </div>
-        <nav class="nav nav-masthead justify-content-center">
-            <a class="nav-link active" href="#">Home</a>
-            <a class="nav-link" href="#">Features</a>
-            <a class="nav-link" href="#">Contact</a>
-        </nav>
-    </header>
-
-    <main role="main" class="inner cover">
-        <h3 class="cover-heading">京东商品评论爬虫</h3>
-        <p class="lead">爬取指定商品的所有评论信息，进行数据分析与可视化。</p>
-        <form>
-            <div class="form-group">
-                <input type="text" class="form-control" aria-describedby="urlHelp"
-                       placeholder="请输入商品详情页URL">
-                <small id="urlHelp" class="form-text text-muted">例：https://item.jd.com/22042025230.html
-                </small>
-                <br>
-                <div class="input-group">
-                    <div style="margin-left: 20%;margin-right: 5%">
-                        <img src="../static/img/xhyw.png" onclick="this.src='/code?'+ Math.random()" style="height: 40px;">
-                    </div>
-                    <div style="height: 40px">
-                        <input type="text" class="form-control" placeholder="Search for...">
-                    </div>
-                </div><!-- /input-group -->
-                <!--<img src="/code " onclick="this.src='/code?'+ Math.random()">-->
-                <!--<input type="text" class="form-control" placeholder="请输入验证码" style="display: inline">-->
+{% block app_content %}
+<main role="main" class="inner cover">
+    <h2 class="cover-heading">京东商品评论爬虫</h2>
+    <p class="lead">爬取指定商品的所有评论信息，进行数据分析与可视化。</p>
+    <form>
+        <div class="form-group">
+            <input id="url-input" type="text" class="form-control" aria-describedby="urlHelp"
+                   placeholder="请输入商品详情页URL">
+            <small id="urlHelp" class="form-text text-muted">例：https://item.jd.com/22042025230.html
+            </small>
+            <br>
+            <div class="input-group">
+                <div style="margin-left: 3%;margin-right: 5%">
+                    <img src="/code " onclick="this.src='/code?'+ Math.random()" style="height: 40px;" alt="验证码图片" title="点击图片换一张">
+                </div>
+                <div style="height: 40px;margin-right: 5%">
+                    <input id="code-input" type="text" class="form-control" placeholder="请输入验证码">
+                </div>
+                <button type="button" id="btn1" class="btn btn-secondary">开始爬取</button>
             </div>
-        </form>
-        <div class="alert alert-dark fade show" role="alert" style="display: none;">
-            <strong>正在爬取评论信息，请稍候......</strong>
         </div>
-        <p>
-            <button type="button" id="btn1" class="btn btn-secondary">开始爬取</button>
-        </p>
-    </main>
+    </form>
+    <div class="alert alert-dark fade show" role="alert" style="display: none;">
+        <strong>正在处理，请稍候......</strong>
+    </div>
+    <p>
 
+    </p>
+</main>
+{% endblock %}
 
-    <footer class="mastfoot mt-auto">
-        <div class="inner">
-            <p>Copyright © <a href="https://zerone01.coding.me/">@JHX</a> 2019 | Powered by <a
-                    href="http://flask.pocoo.org/">Flask</a></p>
-        </div>
-    </footer>
-</div>
-
-<script
-        src="https://code.jquery.com/jquery-3.3.1.js"
-        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-        crossorigin="anonymous"></script>
-<script src="../static/js/bootstrap.js"></script>
-<!--<script src="/static/js/bootstrap.js"></script>-->
-<script>
-    $("#btn1").on('click', function () {
-        const url = $('input').val();
-
-        // 检验输入是否为空
-        if (url.length === 0) {
-            alert('请输入商品详情页URL!');
-            return;
-        }
-
-        // 隐藏按钮，防止重复请求
-        $('#btn1').css('display', 'none');
-
-        // 正则验证URL是否符合格式
-        const pattern = /^(http(s)?:\/\/item\.jd\.com\/)[0-9]+(\.html)$/;
-        const re = new RegExp(pattern);
-        if (!re.test(url)) {
-            alert('URL不符合示例格式，请重试！');
-            return;
-        }
-
-        const pid = url.substr(20);
-        $('.alert').css('display', 'block');
-        $.ajax({
-            type: 'GET',                         //请求方式为post方式
-            url: 'crawl/jd/' + pid,              //请求地址
-            dataType: 'json',                    //服务器返回类型为JSON类型
-            success: function (data) {           //请求成功后的回调函数
-                if (data.result === 'ok') {
-                    alert('爬取完成！');
-                    // 页面跳转
-                    location.href = 'http://' + location.host + '/analyze/jd/bar/' + data.pid
-                }
-            },
-            error: function () {
-                alert('连接服务器失败，请稍后重试！');
-                $('.alert').css('display', 'none');
-                $('#btn1').css('display', 'inline');
-            }
-        });
-    });
-</script>
-</body>
-</html>
