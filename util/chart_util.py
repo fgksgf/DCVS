@@ -1,6 +1,6 @@
 from pyecharts import WordCloud
 from pyecharts.engine import create_default_environment
-from util.jieba_util import *
+from util.nlp_util import *
 from util.mongo_util import get_product_by_pid
 
 
@@ -11,14 +11,12 @@ def make_word_cloud(title, attr, val):
 
 
 if __name__ == '__main__':
-    p = get_product_by_pid(22042025230)
-    sentence = convert_comments_to_sentence(p.poor_comments)
-    t1 = extract_tags_by_tf_idf(sentence)
-
-    att, val = separate_tags(t1)
-    wc1 = make_word_cloud(att, val)
-
+    product = get_product_by_pid(100000822981)
+    w1, w2 = foo(product.poor_comments)
+    wc = make_word_cloud('',w1,w2)
+    print(w1)
+    print(w2)
     # 为渲染创建一个默认配置环境
     # file_type: 'html', 'svg', 'png', 'jpeg', 'gif' or 'pdf'
     env = create_default_environment("html")
-    env.render_chart_to_file(wc1, path='1.html')
+    env.render_chart_to_file(wc, path='1.html')

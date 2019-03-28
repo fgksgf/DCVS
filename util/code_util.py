@@ -68,4 +68,6 @@ def generate_verify_image(size=(130, 40), fg_color='blue', font_size=26, length=
 
 if __name__ == "__main__":
     img, s = generate_verify_image()
+    fp = '../static/img/' + s + '.png'
+    img.save(fp, 'png')
     print(s)

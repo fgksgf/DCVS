@@ -1,4 +1,9 @@
+import math
+
 import jieba.analyse
+from snownlp import SnowNLP
+
+from util.mongo_util import get_product_by_pid
 
 
 def convert_comments_to_sentence(comments):
@@ -39,3 +44,23 @@ def separate_tags(tags):
         # 权重都是介于0-1的浮点数，为了便于生成词云，将它们扩大一千倍并转换为整数
         value.append(int(tag[1] * 1000))
     return attr, value
+
+
+def foo(comments):
+    contents = []
+    for c in comments:
+        nlp = SnowNLP(c.content)
+        # 评论获赞数越多，权重越高，取对数来平滑极差
+        w = int(math.log(c.votes + 1)) ** 2
+        for i in range(w):
+            contents.extend(nlp.summary())
+    return contents
+
+
+if __name__ == '__main__':
+    product = get_product_by_pid(100000822981)
+    contents = foo(product.poor_comments)
+    print(contents)
+    sen = ' '.join(contents)
+    t = extract_tags_by_tf_idf(sen)
+    print(t)
