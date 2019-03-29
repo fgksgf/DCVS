@@ -5,7 +5,7 @@ class Comment:
         # 评分：1为差评，2-3为中评，4-5为好评
         self.score = int(item.get('score'))
         # 是否使用移动端进行评论
-        self.is_mobile = (item.get('isMobile') == 'true')
+        # self.is_mobile = (item.get('isMobile') == 'true')
         # 购买后多少天评论
         self.after_days = int(item.get('days'))
         # 商品颜色
@@ -18,3 +18,5 @@ class Comment:
         self.client = str(item.get('userClientShow')).replace('来自京东', '')
         # 用户等级
         self.level = str(item.get('userLevelName'))
+        # 是否匿名
+        self.isAnonymous = int(item.get('anonymousFlag')) == 1
