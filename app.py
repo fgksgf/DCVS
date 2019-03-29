@@ -6,8 +6,7 @@ from flask import Flask, render_template, session, send_file, request
 from config import *
 from service.jd_service import JDPage
 from util.code_util import generate_verify_image
-from util.mongo_util import get_product_by_pid
-from util.redis_util import redis_client
+from util.db_util import get_product_by_pid, redis_client
 
 app = Flask(__name__)
 app.config.from_object(Config)
