@@ -1,7 +1,7 @@
 from pyecharts import Page, Bar, Pie
 
 from util.chart_util import make_word_cloud
-from util.nlp_util import convert_comments_to_sentence, extract_tags_by_tf_idf, separate_tags
+from util.nlp_util import get_summary_and_weight
 from util.mongo_util import get_product_by_pid
 
 
@@ -9,13 +9,6 @@ class JDPage:
     def __init__(self, product):
         self.page = Page()
         self.product = product
-
-    @staticmethod
-    def make_word_clouds(comments, title):
-        sentence = convert_comments_to_sentence(comments)
-        tags = extract_tags_by_tf_idf(sentence)
-        att, val = separate_tags(tags)
-        return make_word_cloud(title, att, val)
 
     def generate_stacked_bar_charts(self):
         """
@@ -60,15 +53,28 @@ class JDPage:
         生成饼图
         """
         # 生成各种评价占比的饼图
-        a = ["好评", "中评", "差评"]
-        v = [self.product.good_count, self.product.general_count, self.product.poor_count]
+        a = ["默认好评", "好评", "中评", "差评"]
+        v = [self.product.default_good_count, self.product.good_count - self.product.default_good_count,
+             self.product.general_count, self.product.poor_count]
         pie = Pie("好评，中评，差评")
         pie.add("", a, v, is_label_show=True)
         self.page.add(pie)
 
+        # 匿名评论情况饼图
+        v = [0, 0]
+        for c in self.product.comments:
+            if c.isAnonymous:
+                v[0] += 1
+            else:
+                v[1] += 1
+
+        chart = Pie('匿名评论情况')
+        chart.add('', ['匿名', '非匿名'], v, xaxis_interval=0)
+        self.page.add(chart)
+
         # 生成不同配置购买量、不同颜色购买量、用户等级和用户客户端的饼图
         attr_title_dict = {'product_size': "不同配置购买量", 'product_color': "不同颜色购买量",
-                           'level': "用户等级", 'client': "用户客户端"}
+                           'level': "", 'client': "用户客户端"}
         for attr in attr_title_dict.keys():
             d = {}
             for c in self.product.comments:
@@ -100,16 +106,22 @@ class JDPage:
         for t in self.product.hot_comment_tags:
             attr.append(t.get('name'))
             val.append(int(t.get('count')))
-        self.page.add(make_word_cloud("热评标签", attr, val))
+        hot_tags_wc = make_word_cloud("热评词云", attr, val)
+        self.page.add(hot_tags_wc)
 
         # 好评，中评，差评词云
-        self.page.add(self.make_word_clouds(self.product.good_comments, "好评"))
-        self.page.add(self.make_word_clouds(self.product.general_comments, "中评"))
-        self.page.add(self.make_word_clouds(self.product.poor_comments, "差评"))
+        d = [('好评词云', 'good_comments'), ('中评词云', 'general_comments'), ('差评词云', 'poor_comments')]
+        for i in range(3):
+            a, v = get_summary_and_weight(getattr(self.product, d[i][1]))
+            wc = make_word_cloud(d[i][0], a, v)
+            self.page.add(wc)
 
 
 if __name__ == '__main__':
     prod = get_product_by_pid(100000822981)
     p = JDPage(prod)
-    p.generate_stacked_bar_charts()
+    # p.generate_stacked_bar_charts()
+    p.generate_word_cloud_charts()
+    # p.generate_pie_charts()
+    # p.generate_bar_chart_about()
     p.page.render()
