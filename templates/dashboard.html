@@ -7,7 +7,7 @@
     <title>分布式网络数据采集与可视化系统</title>
 
     {% for jsfile_name in script_list %}
-    <script src="{{ host }}/{{ jsfile_name }}.js"></script>
+        <script src="{{ host }}/{{ jsfile_name }}.js"></script>
     {% endfor %}
 
     <link href="/static/css/bootstrap.css" rel="stylesheet">
@@ -42,19 +42,19 @@
                 </h3>
                 <ul class="nav flex-column mb-2">
                     <li class="nav-item">
-                        <a class="nav-link {% if chart_type == 1 %}active{% endif %}" href="../bar/{{pid}}">
+                        <a class="nav-link {% if chart_type == 1 %}active{% endif %}" href="../bar/{{ pid }}">
                             <span data-feather="file-text"></span>
                             条形图
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if chart_type == 2 %}active{% endif %}" href="../pie/{{pid}}">
+                        <a class="nav-link {% if chart_type == 2 %}active{% endif %}" href="../pie/{{ pid }}">
                             <span data-feather="file-text"></span>
                             饼图
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if chart_type == 3 %}active{% endif %}" href="../wordcloud/{{pid}}">
+                        <a class="nav-link {% if chart_type == 3 %}active{% endif %}" href="../wordcloud/{{ pid }}">
                             <span data-feather="file-text"></span>
                             词云图
                         </a>
