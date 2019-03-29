@@ -1,15 +1,7 @@
 import random
 
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
-
-# 字母，为防止混淆，去除o，O，i，I，i，L, q,b,g,u,v,U,V
-LETTERS = "acdefhjkmnpstwxyABCDEFGHJKLMNPQRSTWXY"
-# 数字，为防止混淆，去除0，1, 6, 9
-NUMBERS = "234578"
-# 字体路径
-FONT_PATH = "./Verdana.ttf"
-# 允许的字符集合
-CHARS = LETTERS + NUMBERS
+from config import CHARS, FONT_PATH
 
 
 def generate_verify_image(size=(130, 40), fg_color='blue', font_size=26, length=4, n_line=(3, 5)):
