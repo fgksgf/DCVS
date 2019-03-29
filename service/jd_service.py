@@ -2,7 +2,7 @@ from pyecharts import Page, Bar, Pie
 
 from util.chart_util import make_word_cloud
 from util.nlp_util import get_summary_and_weight
-from util.mongo_util import get_product_by_pid
+from util.db_util import get_product_by_pid
 
 
 class JDPage:

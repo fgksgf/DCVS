@@ -1,6 +1,6 @@
 from pyecharts import WordCloud
 from pyecharts.engine import create_default_environment
-from util.mongo_util import get_product_by_pid
+from util.db_util import get_product_by_pid
 
 
 def make_word_cloud(title, attr, val):

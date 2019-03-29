@@ -1,7 +1,7 @@
 import math
 
 from snownlp import SnowNLP
-from util.mongo_util import get_product_by_pid
+from util.db_util import get_product_by_pid
 
 
 def get_summary_and_weight(comments):
