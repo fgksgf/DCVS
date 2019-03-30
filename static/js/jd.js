@@ -31,7 +31,7 @@ $("#btn1").on('click', function () {
     $('.alert').css('display', 'block');
     const params = {
         pid: pid,
-        code: code
+        captcha: code
     };
     $.ajax({
         type: 'POST',                         //请求方式为post方式
