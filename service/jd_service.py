@@ -20,7 +20,7 @@ class JDPage:
         titles = ['好评', '中评', '差评']
         for attr in self.attr_title_dict.keys():
             d = {}
-            for c in self.product.comments:
+            for c in self.product.get_all_comments():
                 temp = getattr(c, attr)
                 if c.score > 3:
                     index = 0
@@ -69,9 +69,10 @@ class JDPage:
         pie.add("", a, v, is_label_show=True)
         self.page.add(pie)
 
+        comments = self.product.get_all_comments()
         # 匿名评论情况饼图
         v = [0, 0]
-        for c in self.product.comments:
+        for c in comments:
             if c.isAnonymous:
                 v[0] += 1
             else:
@@ -84,7 +85,7 @@ class JDPage:
         # 生成不同配置购买量、不同颜色购买量、用户等级和用户客户端的饼图
         for attr in self.attr_title_dict.keys():
             d = {}
-            for c in self.product.comments:
+            for c in comments:
                 temp = getattr(c, attr)
                 if d.get(temp):
                     d[temp] += 1
