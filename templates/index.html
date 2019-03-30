@@ -1,33 +1,36 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-<main role="main" class="inner cover">
-    <h2 class="cover-heading">京东商品评论爬虫</h2>
-    <p class="lead">爬取指定商品的所有评论信息，进行数据分析与可视化。</p>
-    <form>
-        <div class="form-group">
-            <input id="url-input" type="text" class="form-control" aria-describedby="urlHelp"
-                   placeholder="请输入商品详情页URL">
-            <small id="urlHelp" class="form-text text-muted">例：https://item.jd.com/22042025230.html
-            </small>
-            <br>
-            <div class="input-group">
-                <div style="margin-left: 3%;margin-right: 5%">
-                    <img src="/code " onclick="this.src='/code?'+ Math.random()" style="height: 40px;" alt="验证码图片" title="点击图片换一张">
+    <main role="main" class="inner cover">
+        <h2 class="cover-heading">京东商品评论爬虫</h2>
+        <p class="lead">爬取指定商品的所有评论信息，进行数据分析与可视化。</p>
+        <form style="width: 80%; margin:auto">
+            <div class="form-group" style="width: 70%; margin: auto">
+                <input id="url-input" type="text" class="form-control" aria-describedby="urlHelp"
+                       placeholder="请输入商品详情页URL">
+                <small id="urlHelp" class="form-text text-muted">例：https://item.jd.com/22042025230.html
+                </small>
+                <br>
+                <div class="input-group">
+                    <div style="margin-left: 8%;margin-right: 3%">
+                        <img src="/captcha" onclick="this.src='/captcha?'+ Math.random()" style="height: 40px;"
+                             alt="验证码图片" title="点击图片换一张">
+                    </div>
+                    <div style="height: 40px;margin-right: 3%">
+                        <input id="code-input" type="text" class="form-control" placeholder="请输入验证码">
+                    </div>
+                    <div style="margin-right: 2%">
+                        <button type="button" id="btn1" class="btn btn-secondary">开始爬取</button>
+                    </div>
                 </div>
-                <div style="height: 40px;margin-right: 5%">
-                    <input id="code-input" type="text" class="form-control" placeholder="请输入验证码">
-                </div>
-                <button type="button" id="btn1" class="btn btn-secondary">开始爬取</button>
             </div>
+        </form>
+        <div class="alert alert-dark fade show" role="alert" style="display: none;">
+            <strong>正在处理，请稍候......</strong>
         </div>
-    </form>
-    <div class="alert alert-dark fade show" role="alert" style="display: none;">
-        <strong>正在处理，请稍候......</strong>
-    </div>
-    <p>
+        <p>
 
-    </p>
-</main>
+        </p>
+    </main>
 {% endblock %}
 

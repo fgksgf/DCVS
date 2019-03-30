@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>分布式网络数据采集与可视化系统</title>
+    <title>京东商品评论数据分析</title>
 
     {% for jsfile_name in script_list %}
         <script src="{{ host }}/{{ jsfile_name }}.js"></script>
@@ -17,30 +17,22 @@
 
 <body>
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">京东商品评论数据分析</a>
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#" style="font-size: 21px">京东商品评论数据分析</a>
 </nav>
 
 <div class="container-fluid">
     <div class="row">
         <!-- 左侧边栏 -->
         <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-            <div class="sidebar-sticky">
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <span data-feather="home"></span>
-                            商品基本信息
-                        </a>
-                    </li>
-                </ul>
-
+            <div class="sidebar-sticky" style="padding-left: 5%">
                 <h3 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                    <span>数据可视化</span>
+                    <span style="font-size: 24px;margin-top: 4%">数据可视化</span>
                     <a class="d-flex align-items-center text-muted" href="#">
                         <span data-feather="plus-circle"></span>
                     </a>
                 </h3>
-                <ul class="nav flex-column mb-2">
+                <br>
+                <ul class="nav flex-column mb-2" style="font-size: 20px">
                     <li class="nav-item">
                         <a class="nav-link {% if chart_type == 1 %}active{% endif %}" href="../bar/{{ pid }}">
                             <span data-feather="file-text"></span>
@@ -66,6 +58,33 @@
         <!-- 右侧图形区域 -->
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
             {{ myechart }}
+
+            {% if product %}
+                <h2 style="margin-top: 3%;margin-left: 3%">商品基本信息</h2>
+                <div class="card mb-8" style="margin-top: 2%">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img src="{{ product.img }}" class="card-img" alt="商品图片">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body" style="padding-left: 8%">
+                                <h3 class="card-title" style="margin-top: 4%">
+                                    <a href="https://item.jd.com/{{ product.pid }}.html" target="_blank">{{ product.desc }}</a></h3>
+                                <br><br>
+                                <p class="card-text" style="color: red;font-size: 28px">
+                                    ¥ &nbsp{{ product.price }}
+                                </p>
+                                <br><br>
+                                <p class="card-text" style="font-size: 24px">
+                                    好评数：{{ product.good_count }} &nbsp&nbsp 中评数：{{ product.general_count }} &nbsp&nbsp
+                                    差评数：{{ product.poor_count }} &nbsp&nbsp
+                                    总评论数：{{ product.good_count + product.general_count + product.poor_count }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
         </main>
     </div>
 </div>
