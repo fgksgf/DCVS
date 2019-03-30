@@ -5,7 +5,7 @@ from flask import Flask, render_template, session, send_file, request
 
 from config import *
 from service.jd_service import JDPage
-from util.code_util import generate_verify_image
+from util.code_util import *
 from util.db_util import get_product_by_pid, redis_client
 
 app = Flask(__name__)
@@ -20,10 +20,11 @@ def index():
 @app.route('/crawl/jd/', methods=['POST'])
 def jd_crawler():
     pid = request.values.get('pid', 0)
-    code = request.values.get('code', 0)
+    # 验证码忽略大小写
+    code = str(request.values.get('captcha', 0)).lower()
 
     # 判断验证码是否正确
-    if code != session.get('code'):
+    if code != session.get('captcha'):
         result = {'result': 'wrong_code'}
         return json.dumps(result)
 
@@ -43,6 +44,14 @@ def jd_crawler():
 
     result = {'result': 'ok', 'pid': pid}
     return json.dumps(result)
+
+
+@app.route('/analyze/jd/<string:pid>/')
+def jd_dashboard(pid):
+    product = get_product_by_pid(pid)
+    if product is None:
+        return '404!!!'
+    return render_template('dashboard.html', product=product)
 
 
 @app.route('/analyze/jd/<string:chart>/<string:pid>', methods=['GET'])
@@ -73,13 +82,18 @@ def jd_charts(chart, pid):
     )
 
 
-@app.route('/code')
-def get_code():
-    image, code = generate_verify_image()
-    fp = './static/img/' + code + '.png'
-    image.save(fp, 'png')
-    session['code'] = code
+@app.route('/captcha')
+def get_captcha():
+    filename = pick_a_random_captcha()
+    code = filename[:4]
+    fp = './static/img/captcha/' + code + '.png'
+    session['captcha'] = code
     return send_file(fp, mimetype='image/png')
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
 
 
 if __name__ == '__main__':
