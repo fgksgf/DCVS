@@ -1,19 +1,20 @@
+import os
 import random
 
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 from config import CHARS, FONT_PATH
 
 
-def generate_verify_image(size=(130, 40), fg_color='blue', font_size=26, length=4, n_line=(3, 5)):
+def generate_captcha_image(size=(130, 40), fg_color='blue', font_size=26, length=4, n_line=(3, 5)):
     """
-    生成验证码图片
+    生成验证码图片,并保存为png格式
 
     :param size: 图片的大小，格式（宽，高），默认为(120, 30)
     :param fg_color: 前景色，验证码字符颜色，默认为蓝色#0000FF
     :param font_size: 验证码字体大小
     :param length: 验证码字符个数
     :param n_line: 干扰线的条数范围，格式元组，默认为(1, 2)
-    :return: 返回元组，[0]: 验证码图片, [1]: 验证码图片中的字符串
+    :return: 返回验证码图片中的字符串
     """
     width, height = size  # 宽， 高
     img = Image.new("RGB", size, (255, 255, 255))  # 创建图形
@@ -55,11 +56,42 @@ def generate_verify_image(size=(130, 40), fg_color='blue', font_size=26, length=
     img = img.filter(ImageFilter.EDGE_ENHANCE_MORE)  # 滤镜，边界加强（阈值更大）
 
     string = ''.join(code).lower()
-    return img, string
 
-
-if __name__ == "__main__":
-    img, s = generate_verify_image()
-    fp = '../static/img/' + s + '.png'
+    fp = './static/img/captcha/' + string + '.png'
     img.save(fp, 'png')
-    print(s)
+    return string
+
+
+def get_available_filename_list():
+    """
+    获取指定目录下所有验证码图片文件名
+
+    :return: 验证码图片文件名列表
+    """
+    path = './static/img/captcha/'
+    lst = []
+    for file in os.listdir(path):
+        file_path = os.path.join(path, file)
+        if os.path.splitext(file_path)[1] == '.png':
+            lst.append(file)
+    return lst
+
+
+def pick_a_random_captcha():
+    """
+    随机选择一个已存在的验证码图片，若验证码图片少于15张，则随机生成一些
+
+    :return: 返回验证码图片文件名
+    """
+    lst = get_available_filename_list()
+    if len(lst) < 15:
+        for i in range(15 - len(lst)):
+            generate_captcha_image()
+    lst = get_available_filename_list()
+    return random.choice(lst)
+
+
+if __name__ == '__main__':
+    # 测试时需要把路径改为：'../static/img/captcha/'
+    lst = get_available_filename_list()
+    print(lst)
