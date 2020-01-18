@@ -1,3 +1,8 @@
+"""
+This program is to test if current urls and apis work,
+and debug the product spider.
+"""
+
 import json
 
 import requests
