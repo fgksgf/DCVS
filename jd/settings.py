@@ -43,7 +43,7 @@ COOKIES_ENABLED = False
 DEFAULT_REQUEST_HEADERS = {
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
     'Accept-Language': 'en',
-    'Referer': ' https://item.jd.com/1.html',
+    'Referer': 'https://item.jd.com/1.html',
 }
 
 # Enable or disable spider middlewares
@@ -99,17 +99,15 @@ ITEM_PIPELINES = {
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 # IP代理池url
-PROXY_URL = 'http://39.96.94.81:5000/random'
+PROXY_URL = ''
 
 # mongodb config
-# MONGO_HOST = '127.0.0.1'
-MONGO_HOST = '39.96.94.81'
+MONGO_HOST = '127.0.0.1'
 MONGO_PORT = 27017
 MONGO_DATABASE = 'jd'
-MONGO_USERNAME = 'zerone'
-MONGO_PASSWORD = 'ZG8gbm90IGhhY2sg'
-# MONGODB_URL = 'mongodb+srv://zerone:ZG8gbm90IGhhY2sg@cluster0-noksk.mongodb.net'
-MONGODB_URL = 'mongodb://root:ZG8gbm90IGhhY2sg@dds-wz939e34ed40f6141136-pub.mongodb.rds.aliyuncs.com:3717,dds-wz939e34ed40f6142572-pub.mongodb.rds.aliyuncs.com:3717/admin?replicaSet=mgset-15099763'
+MONGO_USERNAME = ''
+MONGO_PASSWORD = ''
+MONGODB_URL = ''
 
 # scrapy-redis config
 SCHEDULER = "scrapy_redis.scheduler.Scheduler"
@@ -117,10 +115,6 @@ DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
 SCHEDULER_PERSIST = True
 
 # redis config
-REDIS_HOST = '39.96.94.81'
+REDIS_HOST = ''
 REDIS_PORT = 6379
-REDIS_PARAMS = {
-    'password': 'iE23fP$d9yTQCgmc'
-}
-# REDIS_PARAMS['password'] = 'myproject.RedisClient'
-REDIS_PASSWORD = 'iE23fP$d9yTQCgmc'
+REDIS_PASSWORD = ''
