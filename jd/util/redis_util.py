@@ -5,7 +5,7 @@ from jd.settings import REDIS_HOST, REDIS_PORT, REDIS_PASSWORD
 client = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, password=REDIS_PASSWORD, decode_responses=True)
 
 if __name__ == '__main__':
-    # client.lpush('jd:items_urls', 'https://item.jd.com/100003434260.html')
+    # put jd product url in redis
     client.lpush('jd:items_urls', 'https://item.jd.com/100002355147.html')
     # client.set('100000323510', 4)
     # t = client.get('100000323510')

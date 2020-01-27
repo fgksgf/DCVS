@@ -9,22 +9,31 @@ from scrapy import Item, Field
 
 
 class ProductItem(Item):
+    # the collection name in mongodb
     collection = 'products'
 
+    # product id
     pid = Field()
+    # description
     desc = Field()
+    # image url
     img_url = Field()
+    # price
     price = Field()
-    # 属性名称列表，例如颜色、尺码
+    # list of product's attributes, such as color and size
     attributes = Field()
-    # 可选择项目列表
+    # options of above each attribute, such as 'red' or 'XL'
     choices = Field()
+    # summary of comments
     comment_summary = Field()
+    # list of hot comments
     hot_comments = Field()
+    # detailed comments
     comments = Field()
 
 
 class PriceItem(Item):
+    # the collection name in mongodb
     collection = 'products'
 
     pid = Field()
@@ -32,6 +41,7 @@ class PriceItem(Item):
 
 
 class CommentSummaryItem(Item):
+    # the collection name in mongodb
     collection = 'products'
 
     pid = Field()
@@ -40,6 +50,7 @@ class CommentSummaryItem(Item):
 
 
 class CommentItem(Item):
+    # the collection name in mongodb
     collection = 'products'
 
     pid = Field()

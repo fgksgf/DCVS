@@ -24,11 +24,8 @@ def parse_comment(pid, page, score):
         result = json.loads(response.text)
         comment_item = CommentItem()
         comment_item['pid'] = pid
-
-        # debug：每种评论只爬取五页
-        if len(result['comments']) != 0:
-            comment_item['comments'] = result['comments']
-            print(comment_item)
+        comment_item['comments'] = result['comments']
+        print(comment_item)
 
 
 if __name__ == '__main__':
