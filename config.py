@@ -5,9 +5,9 @@ POSTFIX = '.html'
 WORK_LOAD = 150
 
 # redis config
-REDIS_HOST = '39.96.94.81'
+REDIS_HOST = ''
 REDIS_PORT = 6379
-REDIS_PASSWORD = 'iE23fP$d9yTQCgmc'
+REDIS_PASSWORD = ''
 
 # mongodb config
 MONGODB_URL = 'mongodb://localhost:27017/'
