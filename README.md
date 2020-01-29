@@ -22,3 +22,20 @@ There are four main modules in the system:
 4.  Web application module. It mainly contains four sub-modules: node management, data processing, data visualization, and adding tasks. The module also acts as an independent node.
 
 ![](./static/img/dcvs-1.jpg)
+
+## Screenshots
+
++ main page
+![](./static/img/screenshots-1.jpg)
+
++ result page
+![](./static/img/screenshots-2.jpg)
+
++ visualization
+![](./static/img/screenshots-3.jpg)
+
+![](./static/img/screenshots-4.jpg)
+
+![](./static/img/screenshots-5.jpg)
+
+
