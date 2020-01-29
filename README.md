@@ -4,6 +4,8 @@ The JD Distributed Crawler and Visualization System (JD-DCVS) is the graduation 
 
 It can crawl comments of given [JD](www.jd.com) goods' url. After that, users can visualize and analyze the data by several statistics charts, such as pie charts, line charts and wordcloud charts, which can help users judge whether the goods are good.
 
+**If you want to crawl other data like weibo, you can reuse most modules in this system.**
+
 ## Features
 
 +   **Distributed architecture design**. By sharing the crawl queue, distributed crawlers can dynamically add nodes at any time without downtime, which is extremely scalable. 
@@ -38,4 +40,7 @@ There are four main modules in the system:
 
 ![](./static/img/screenshots-5.jpg)
 
++ node management
+![](./static/img/screenshots-6.jpg)
 
+![](./static/img/screenshots-7.jpg)
