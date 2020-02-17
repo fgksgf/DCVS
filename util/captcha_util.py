@@ -4,8 +4,12 @@ import random
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 from config import CHARS, FONT_PATH
 
+# CAPTCHA_PATH = './'
+CAPTCHA_PATH = './static/img/captcha/'
 
-def generate_captcha_image(size=(130, 40), fg_color='blue', font_size=26, length=4, n_line=(3, 5)):
+
+def generate_captcha_image(size=(130, 40), fg_color='blue', font_size=26,
+                           length=4, n_line=(3, 5), path=CAPTCHA_PATH):
     """
     生成验证码图片,并保存为png格式
 
@@ -14,6 +18,7 @@ def generate_captcha_image(size=(130, 40), fg_color='blue', font_size=26, length
     :param font_size: 验证码字体大小
     :param length: 验证码字符个数
     :param n_line: 干扰线的条数范围，格式元组，默认为(1, 2)
+    :param path: 验证码图片的保存路径，默认为`static/img/captcha/`
     :return: 返回验证码图片中的字符串
     """
     width, height = size  # 宽， 高
@@ -57,18 +62,17 @@ def generate_captcha_image(size=(130, 40), fg_color='blue', font_size=26, length
 
     string = ''.join(code).lower()
 
-    fp = './static/img/captcha/' + string + '.png'
+    fp = path + string + '.png'
     img.save(fp, 'png')
     return string
 
 
-def get_available_filename_list():
+def get_available_filename_list(path=CAPTCHA_PATH):
     """
     获取指定目录下所有验证码图片文件名
 
     :return: 验证码图片文件名列表
     """
-    path = './static/img/captcha/'
     lst = []
     for file in os.listdir(path):
         file_path = os.path.join(path, file)
@@ -84,6 +88,7 @@ def pick_a_random_captcha():
     :return: 返回验证码图片文件名
     """
     lst = get_available_filename_list()
+    # lst = []
     if len(lst) < 15:
         for i in range(15 - len(lst)):
             generate_captcha_image()
@@ -93,5 +98,6 @@ def pick_a_random_captcha():
 
 if __name__ == '__main__':
     # 测试时需要把路径改为：'../static/img/captcha/'
-    lst = get_available_filename_list()
-    print(lst)
+    # lst = get_available_filename_list(path='../static/img/captcha/')
+    # print(lst)
+    generate_captcha_image()
