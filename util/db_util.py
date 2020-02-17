@@ -26,4 +26,4 @@ def get_product_by_pid(pid):
 
 
 if __name__ == '__main__':
-    redis_client.lpush('jd:items_urls', 'https://item.jd.com/100000822969.html')
+    redis_client.lpush('jd:items_urls', 'https://item.jd.com/100005638677.html')
