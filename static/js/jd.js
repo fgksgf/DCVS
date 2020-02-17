@@ -1,17 +1,9 @@
 $("#btn1").on('click', function () {
     const url = $('#url-input').val();
-    const code = $('#code-input').val();
 
     // 检验输入是否为空
     if (url.length === 0) {
         alert('请输入商品详情页URL!');
-        return;
-    }
-    if (code.length === 0) {
-        alert('请输入验证码!');
-        return;
-    } else if (code.length !==4) {
-        alert('输入的验证码有误!');
         return;
     }
 
@@ -30,8 +22,7 @@ $("#btn1").on('click', function () {
     const pid = url.slice(20, -5);
     $('.alert').css('display', 'block');
     const params = {
-        pid: pid,
-        captcha: code
+        pid: pid
     };
     $.ajax({
         type: 'POST',                         //请求方式为post方式
@@ -43,10 +34,6 @@ $("#btn1").on('click', function () {
                 alert('爬取完成！');
                 // 页面跳转
                 location.href = 'http://' + location.host + '/analyze/jd/bar/' + data.pid
-            } else if (data.result === 'wrong_code') {
-                alert('验证码错误！');
-                $('.alert').css('display', 'none');
-                $('#btn1').css('display', 'inline');
             }
         },
         error: function () {
