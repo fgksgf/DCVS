@@ -14,16 +14,15 @@ class ProxyMiddleware:
     Proxy middleware, get a random and available proxy from specific proxy pool.
     """
 
-    def __init__(self, proxy_url):
+    def __init__(self, proxy_pool_api):
         self.logger = logging.getLogger(__name__)
-        self.proxy_url = proxy_url
+        self.proxy_pool_api = proxy_pool_api
 
     def get_random_proxy(self):
         try:
-            response = requests.get(self.proxy_url)
+            response = requests.get(self.proxy_pool_api['get_a_proxy'])
             if response.status_code == 200:
-                proxy = response.text
-                return proxy
+                return response.json()['proxy']
         except requests.ConnectionError:
             return False
 
@@ -39,7 +38,7 @@ class ProxyMiddleware:
     def from_crawler(cls, crawler):
         settings = crawler.settings
         return cls(
-            proxy_url=settings.get('PROXY_URL')
+            proxy_pool_api=settings.get('PROXY_POOL_API')
         )
 
 
