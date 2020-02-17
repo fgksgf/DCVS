@@ -41,8 +41,8 @@ There are four main modules in the system:
 # download docker image
 $ docker pull mongo
 
-# run image in background /<YourAbsolutePath>
-$ docker run -p 27017:27017 -v /Users/zerone/Documents/DCVS/example_data/mongodb:/data/db -d mongo
+# run image in background 
+$ docker run -p 27017:27017 -v /<YourAbsolutePath>/db:/data/db -d mongo
 
 # Connect mongodb via GUI tools (like Robo 3T) and create jd database.
 ```
@@ -54,8 +54,7 @@ $ docker run -p 27017:27017 -v /Users/zerone/Documents/DCVS/example_data/mongodb
 $ docker pull redis:alpine
 
 # run image in background and set password
-$ docker run -p 6379:6379 -d redis:alpine redis-server \
---appendonly yes --requirepass "password"
+$ docker run -p 6379:6379 -d redis:alpine redis-server --requirepass "password"
 ```
 
 ### IP proxy pool
@@ -80,7 +79,7 @@ $ docker-compose up -d
 
 ## Test
 
-Because APIs may be changed, if you want to check if the jd crawler still works, just run `debug_comment_spider.py` and `debug_product_spider.py`. You would get the answer easily after you see the results.
+Because APIs may be changed, if you want to check if the jd crawler still works, just run `./jd/util/debug_comment_spider.py` and `./jd/util/debug_product_spider.py`. You would get the answer easily after you see the results.
 
 ## Screenshots
 
@@ -107,5 +106,6 @@ Because APIs may be changed, if you want to check if the jd crawler still works,
 ### 0.1 (2020-02-11)
 
 + Update visualization module
++ Update data model
++ Refactor charts code to improve reusability
 + Add more details about configuration and usage
-+ Add example crawled data for visualization
