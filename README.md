@@ -25,6 +25,63 @@ There are four main modules in the system:
 
 ![](./static/img/dcvs-1.jpg)
 
+## Requirements
+
++ Python 3.6+
++ [Docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/) and [docker compose](https://docs.docker.com/compose/install/)
++ Mongodb for store crawled data
++ Redis for maintaining the shared crawl queue
++ At least one server with public network IP address for deploying [IP proxy pool](https://github.com/fgksgf/IP-Proxy-Pool)
+
+## Configuration
+
+### Mongodb
+
+```bash
+# download docker image
+$ docker pull mongo
+
+# run image in background /<YourAbsolutePath>
+$ docker run -p 27017:27017 -v /Users/zerone/Documents/DCVS/example_data/mongodb:/data/db -d mongo
+
+# Connect mongodb via GUI tools (like Robo 3T) and create jd database.
+```
+
+### Redis
+
+```bash
+# download docker image
+$ docker pull redis:alpine
+
+# run image in background and set password
+$ docker run -p 6379:6379 -d redis:alpine redis-server \
+--appendonly yes --requirepass "password"
+```
+
+### IP proxy pool
+
+```bash
+$ git clone git@github.com:fgksgf/IP-Proxy-Pool.git
+$ cd IP-Proxy-Pool/
+
+# set your own password
+$ vim redis.conf
+$ vim proxypool/settings.py
+
+# run ip proxy pool
+$ docker-compose up -d
+```
+
+## Usage
+
+### Informal Usage (Less nodes)
+
+### Formal Usage (More nodes)
+
+## Test
+
+Because APIs may be changed, if you want to check if the jd crawler still works, just run `debug_comment_spider.py` and `debug_product_spider.py`. You would get the answer easily after you see the results.
+
 ## Screenshots
 
 + main page
@@ -44,3 +101,11 @@ There are four main modules in the system:
 ![](./static/img/screenshots-6.jpg)
 
 ![](./static/img/screenshots-7.jpg)
+
+## Change Log
+
+### 0.1 (2020-02-11)
+
++ Update visualization module
++ Add more details about configuration and usage
++ Add example crawled data for visualization
