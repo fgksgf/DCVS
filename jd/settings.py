@@ -98,23 +98,28 @@ ITEM_PIPELINES = {
 # HTTPCACHE_IGNORE_HTTP_CODES = []
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-# IP代理池url
-PROXY_URL = ''
-
 # mongodb config
 MONGO_HOST = '127.0.0.1'
 MONGO_PORT = 27017
 MONGO_DATABASE = 'jd'
 MONGO_USERNAME = ''
 MONGO_PASSWORD = ''
-MONGODB_URL = ''
+MONGODB_URL = 'mongodb://localhost:27017/'
+
+# redis config
+REDIS_HOST = '127.0.0.1'
+REDIS_PORT = 6379
+REDIS_PARAMS = {
+    'password': 'password'
+}
+
+# proxy pool config
+PROXY_POOL_API = {
+    'get_a_proxy': 'http://118.24.52.95/get',
+    'get_proxy_number': 'http://118.24.52.95/get_status'
+}
 
 # scrapy-redis config
 SCHEDULER = "scrapy_redis.scheduler.Scheduler"
 DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
 SCHEDULER_PERSIST = True
-
-# redis config
-REDIS_HOST = ''
-REDIS_PORT = 6379
-REDIS_PASSWORD = ''
