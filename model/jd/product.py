@@ -2,6 +2,9 @@ from model.jd.comment import Comment
 
 
 class Product:
+    """
+    京东商品类
+    """
     def __init__(self, item):
         # 商品id
         self.pid = item.get('pid')
@@ -24,6 +27,11 @@ class Product:
         self.poor_count = int(item.get('comment_summary').get('poorCount'))
         # 默认好评数
         self.default_good_count = int(item.get('comment_summary').get('defaultGoodCount'))
+
+        # 给1-5分评论数
+        self.score_count = [0]
+        for i in range(5):
+            self.score_count.append(int(item.get('comment_summary').get('score{}Count'.format(str(i+1)))))
 
         # 热评标签
         self.hot_comment_tags = item.get('hot_comments')
