@@ -4,16 +4,16 @@ from snownlp import SnowNLP
 from util.db_util import get_product_by_pid
 
 
-def get_summary_and_weight(comments):
+# TODO: 评论内容去停用词、标点符号
+def cal_summary_and_weight(comments):
     """
-    获得评论内容的摘要和权重
+    计算评论内容的摘要及其对应权重
 
     :param comments: 需要分析的评论列表
-    :return: 返回摘要列表和对应的权重列表
+    :return: 返回列表，列表元素为元组，元组中包含摘要和其对应的权重
     """
     d = {}
-    att = []
-    val = []
+    ret = []
     for c in comments:
         nlp = SnowNLP(c.content)
         # 评论获赞数越多，权重越高，取对数来平滑极差
@@ -24,9 +24,8 @@ def get_summary_and_weight(comments):
             else:
                 d[kw] = w
     for k in d.keys():
-        att.append(k)
-        val.append(d.get(k))
-    return att, val
+        ret.append((k, d.get(k)))
+    return ret
 
 
 if __name__ == '__main__':
