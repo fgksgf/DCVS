@@ -33,7 +33,7 @@ $("#btn1").on('click', function () {
             if (data.result === 'ok') {
                 alert('爬取完成！');
                 // 页面跳转
-                location.href = 'http://' + location.host + '/analyze/jd/bar/' + data.pid
+                location.href = 'http://' + location.host + '/analyze/jd/' + data.pid
             }
         },
         error: function () {
