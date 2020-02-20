@@ -30,6 +30,7 @@ def jd_crawler():
     if product is None:
         # 若无，将获取的pid与网址前后缀连接，插入到任务队列
         redis_client.lpush('jd:items_urls', PREFIX + pid + POSTFIX)
+        time.sleep(5)
         # 每两秒查询一次，爬取任务是否完成
         while int(redis_client.get(pid)) > 0:
             time.sleep(2)
@@ -48,7 +49,7 @@ def jd_dashboard(pid):
     product = get_product_by_pid(pid)
     if product is None:
         return '404!!!'
-    return render_template('dashboard.html', product=product)
+    return render_template('dashboard.html', product=product, pid=pid)
 
 
 @app.route('/analyze/jd/<string:chart>/<string:pid>', methods=['GET'])
