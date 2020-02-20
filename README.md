@@ -31,7 +31,7 @@ There are four main modules in the system:
 + [Docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/) and [docker compose](https://docs.docker.com/compose/install/)
 + Mongodb for store crawled data
 + Redis for maintaining the shared crawl queue
-+ At least one server with public network IP address for deploying [IP proxy pool](https://github.com/fgksgf/IP-Proxy-Pool)
++ ~~At least one server with public network IP address for deploying [IP proxy pool](https://github.com/fgksgf/IP-Proxy-Pool)~~
 
 ## Configuration
 
@@ -43,8 +43,6 @@ $ docker pull mongo
 
 # run image in background 
 $ docker run -p 27017:27017 -v /<YourAbsolutePath>/db:/data/db -d mongo
-
-# Connect mongodb via GUI tools (like Robo 3T) and create jd database.
 ```
 
 ### Redis
@@ -57,23 +55,27 @@ $ docker pull redis:alpine
 $ docker run -p 6379:6379 -d redis:alpine redis-server --requirepass "password"
 ```
 
-### IP proxy pool
-
-```bash
-$ git clone git@github.com:fgksgf/IP-Proxy-Pool.git
-$ cd IP-Proxy-Pool/
-
-# set your own password
-$ vim redis.conf
-$ vim proxypool/settings.py
-
-# run ip proxy pool
-$ docker-compose up -d
-```
-
 ## Usage
 
-### Informal Usage (Less nodes)
+### Informal Usage (Single node)
+
+You can run this project with single node just for test:
+
+1. Complete above configurations to run redis and mongodb docker images.
+2. Create a virtual python environment and install requirements.
+```bash
+$ git clone https://github.com/fgksgf/DCVS.git
+$ cd DCVS/
+$ pip install -r requirements.txt
+```
+3. Start a master crawler node, a slave crawler node and the web server.
+```bash
+$ python jd/start_master.py
+$ python jd/start_slave.py
+$ python app.py
+```
+4. Open the brower, enter `http://127.0.0.1:5000/`, input a url of jd goods like `https://item.jd.com/100008578480.html`.
+
 
 ### Formal Usage (More nodes)
 
@@ -109,3 +111,6 @@ Because APIs may be changed, if you want to check if the jd crawler still works,
 + Update data model
 + Refactor charts code to improve reusability
 + Add more details about configuration and usage
++ Remove CAPTCHA
++ Update page flow
++ Update proxy pool dependency
