@@ -60,7 +60,7 @@ tqdm==4.41.1
 Twisted==19.10.0
 urllib3==1.25.7
 w3lib==1.21.0
-websockets==8.1
+websockets==9.1
 Werkzeug==0.16.0
 wordcloud==1.6.0
 zope.interface==4.7.1
