@@ -49,7 +49,7 @@ queuelib==1.5.0
 random-useragent==1.0
 redis==3.3.11
 requests==2.22.0
-Scrapy==1.8.0
+Scrapy==1.8.2
 scrapy-redis==0.6.8
 scrapyd==1.2.1
 service-identity==18.1.0
